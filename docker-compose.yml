@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  meli-vision:
+    build: .
+    container_name: meli-vision-app
+    ports:
+      - "8501:8501"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - PYTHONPATH=/app/src
+    volumes:
+      - ./dados:/app/dados:ro
+      - db-volume:/app/db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  db-volume:
+    driver: local

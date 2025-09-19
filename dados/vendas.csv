@@ -1,0 +1,26 @@
+id_venda,id_produto,id_cliente,data_venda,quantidade,preco_unitario,valor_total,desconto_aplicado,forma_pagamento,prazo_entrega_dias,status_venda,data_entrega,avaliacao_venda,comentario_cliente,comissao_ml,taxa_frete
+VEN001,PROD001,CLI002,2024-01-20,1,1299.99,1299.99,0.00,Cartão de Crédito,3,entregue,2024-01-23,5,"Produto excelente, chegou rápido!",129.99,15.90
+VEN002,PROD002,CLI001,2024-01-21,1,599.90,599.90,59.99,PIX,2,entregue,2024-01-23,4,"Tênis muito confortável",53.99,12.50
+VEN003,PROD003,CLI004,2024-01-22,2,189.99,379.98,0.00,Boleto,5,entregue,2024-01-27,4,"Boa cafeteira, recomendo",38.00,18.75
+VEN004,PROD005,CLI003,2024-01-23,1,199.90,199.90,19.99,Cartão de Débito,3,entregue,2024-01-26,5,"Som incrível!",18.00,8.90
+VEN005,PROD004,CLI007,2024-01-24,3,24.90,74.70,0.00,PIX,7,entregue,2024-01-31,5,"Livros em perfeito estado",7.47,5.50
+VEN006,PROD006,CLI005,2024-01-25,1,299.99,299.99,30.00,Cartão de Crédito,4,entregue,2024-01-29,4,"Jaqueta de ótima qualidade",27.00,14.20
+VEN007,PROD008,CLI008,2024-01-26,1,129.90,129.90,0.00,PIX,2,entregue,2024-01-28,5,"Mouse perfeito para jogos",12.99,7.80
+VEN008,PROD010,CLI014,2024-01-27,1,149.90,149.90,0.00,Cartão de Crédito,3,entregue,2024-01-30,4,"Whey de boa qualidade",14.99,11.50
+VEN009,PROD001,CLI006,2024-01-28,1,1299.99,1299.99,100.00,Cartão de Crédito,3,entregue,2024-01-31,5,"Celular excelente",120.00,15.90
+VEN010,PROD009,CLI011,2024-01-29,2,79.99,159.98,0.00,Boleto,5,entregue,2024-02-03,5,"Minha filha amou!",15.99,12.30
+VEN011,PROD011,CLI012,2024-01-30,1,389.90,389.90,0.00,PIX,4,entregue,2024-02-03,4,"Camisa de qualidade",38.99,16.80
+VEN012,PROD007,CLI010,2024-01-31,1,89.90,89.90,8.99,Cartão de Débito,3,entregue,2024-02-03,4,"Panela muito boa",8.09,9.50
+VEN013,PROD013,CLI009,2024-02-01,1,899.99,899.99,0.00,Cartão de Crédito,5,entregue,2024-02-06,4,"Tablet funciona bem",89.99,22.50
+VEN014,PROD015,CLI013,2024-02-02,1,249.90,249.90,25.00,PIX,4,entregue,2024-02-06,5,"Kit de panelas excelente",22.49,17.90
+VEN015,PROD002,CLI015,2024-02-03,1,599.90,599.90,0.00,Cartão de Crédito,3,entregue,2024-02-06,4,"Tênis muito bom",59.99,12.50
+VEN016,PROD005,CLI001,2024-02-04,1,199.90,199.90,0.00,PIX,2,entregue,2024-02-06,5,"Segundo fone, muito satisfeita",19.99,8.90
+VEN017,PROD012,CLI004,2024-02-05,1,299.99,299.99,0.00,Boleto,6,entregue,2024-02-11,4,"Aspirador potente",29.99,25.80
+VEN018,PROD014,CLI003,2024-02-06,1,159.90,159.90,15.99,Cartão de Crédito,3,entregue,2024-02-09,5,"Perfume maravilhoso",14.39,6.50
+VEN019,PROD001,CLI008,2024-02-07,1,1299.99,1299.99,0.00,PIX,3,entregue,2024-02-10,4,"Bom celular",129.99,15.90
+VEN020,PROD003,CLI002,2024-02-08,1,189.99,189.99,0.00,Cartão de Crédito,4,entregue,2024-02-12,4,"Segunda cafeteira para o escritório",18.99,14.70
+VEN021,PROD006,CLI007,2024-02-09,1,299.99,299.99,0.00,Cartão de Débito,4,em_transito,2024-02-13,NULL,NULL,29.99,14.20
+VEN022,PROD008,CLI005,2024-02-10,1,129.90,129.90,12.99,PIX,2,em_transito,2024-02-12,NULL,NULL,11.69,7.80
+VEN023,PROD004,CLI006,2024-02-11,5,24.90,124.50,0.00,Boleto,7,processando,NULL,NULL,NULL,12.45,8.90
+VEN024,PROD010,CLI009,2024-02-12,1,149.90,149.90,0.00,Cartão de Crédito,3,processando,NULL,NULL,NULL,14.99,11.50
+VEN025,PROD013,CLI012,2024-02-13,1,899.99,899.99,90.00,PIX,5,processando,NULL,NULL,NULL,80.99,22.50

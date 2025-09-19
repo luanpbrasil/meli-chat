@@ -1,0 +1,16 @@
+id_produto,nome_produto,categoria,subcategoria,preco,estoque,descricao,marca,peso_kg,dimensoes_cm,data_criacao,status,avaliacao_media,total_avaliacoes
+PROD001,Smartphone Samsung Galaxy A54 128GB,Eletrônicos,Celulares e Smartphones,1299.99,45,"Smartphone com tela de 6.4 polegadas, câmera tripla de 50MP e bateria de 5000mAh",Samsung,0.202,"15.9x7.7x0.8",2024-01-15,ativo,4.3,127
+PROD002,Tênis Nike Air Max 90 Masculino,Roupas e Acessórios,Calçados,599.90,23,"Tênis esportivo com tecnologia Air Max, ideal para corrida e uso casual",Nike,0.850,"32x20x12",2024-01-20,ativo,4.5,89
+PROD003,Cafeteira Elétrica Philco PH16,Casa e Jardim,Eletrodomésticos,189.99,78,"Cafeteira elétrica com capacidade para 16 xícaras, filtro permanente",Philco,1.200,"25x18x30",2024-02-01,ativo,4.1,156
+PROD004,Livro Dom Casmurro - Machado de Assis,Livros,Literatura Brasileira,24.90,120,"Clássico da literatura brasileira, edição de bolso",Companhia das Letras,0.180,"18x11x1.5",2024-01-10,ativo,4.7,203
+PROD005,Fone de Ouvido Bluetooth JBL Tune 510BT,Eletrônicos,Áudio,199.90,67,"Fone wireless com 40 horas de bateria e som JBL Pure Bass",JBL,0.160,"18x16x7",2024-02-10,ativo,4.2,94
+PROD006,Jaqueta Jeans Feminina Levi's,Roupas e Acessórios,Roupas Femininas,299.99,34,"Jaqueta jeans clássica, 100% algodão, corte regular",Levi's,0.650,"45x35x5",2024-01-25,ativo,4.4,67
+PROD007,Panela de Pressão Rochedo 4.5L,Casa e Jardim,Utensílios Domésticos,89.90,156,"Panela de pressão em alumínio com sistema de segurança",Rochedo,1.800,"25x25x20",2024-01-18,ativo,4.0,134
+PROD008,Mouse Gamer Logitech G203,Eletrônicos,Informática,129.90,89,"Mouse gamer com sensor de 8000 DPI e iluminação RGB",Logitech,0.085,"11.6x6.2x3.8",2024-02-05,ativo,4.6,178
+PROD009,Boneca Barbie Fashionista,Brinquedos,Bonecas,79.99,203,"Boneca Barbie com roupas da moda e acessórios inclusos",Mattel,0.250,"32x15x6",2024-01-12,ativo,4.3,245
+PROD010,Suplemento Whey Protein 900g,Saúde,Suplementos,149.90,67,"Whey protein concentrado, sabor chocolate, 30 doses",Max Titanium,0.900,"20x15x15",2024-02-08,ativo,4.2,156
+PROD011,Camiseta Polo Masculina Lacoste,Roupas e Acessórios,Roupas Masculinas,389.90,28,"Camiseta polo clássica em algodão piqué, corte regular",Lacoste,0.200,"40x30x2",2024-01-22,ativo,4.5,45
+PROD012,Aspirador de Pó Electrolux ABS03,Casa e Jardim,Eletrodomésticos,299.99,45,"Aspirador de pó com filtro HEPA e potência de 1400W",Electrolux,4.200,"35x25x30",2024-02-12,ativo,4.1,89
+PROD013,Tablet Samsung Galaxy Tab A8,Eletrônicos,Tablets,899.99,23,"Tablet com tela de 10.5 polegadas e 64GB de armazenamento",Samsung,0.508,"24.6x16.1x0.69",2024-01-28,ativo,4.2,67
+PROD014,Perfume Boticário Malbec Masculino,Beleza,Perfumaria,159.90,134,"Perfume masculino amadeirado, frasco de 100ml",O Boticário,0.350,"15x8x8",2024-02-03,ativo,4.4,123
+PROD015,Kit Panelas Antiaderentes Tramontina,Casa e Jardim,Utensílios Domésticos,249.90,56,"Kit com 5 panelas antiaderentes com revestimento cerâmico",Tramontina,3.500,"40x30x25",2024-01-30,ativo,4.3,178

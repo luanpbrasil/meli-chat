@@ -1,0 +1,16 @@
+id_cliente,nome_completo,email,telefone,data_nascimento,genero,cidade,estado,cep,data_cadastro,nivel_comprador,total_compras,valor_total_gasto,categoria_preferida,ultimo_acesso
+CLI001,Maria Silva Santos,maria.silva@email.com,(11) 98765-4321,1987-05-15,F,São Paulo,SP,04567-890,2021-06-10,Ouro,47,12450.75,Roupas e Acessórios,2024-02-14
+CLI002,João Carlos Oliveira,joao.oliveira@email.com,(21) 97654-3210,1982-11-23,M,Rio de Janeiro,RJ,22345-678,2020-09-22,Platinum,89,28934.20,Eletrônicos,2024-02-13
+CLI003,Ana Beatriz Costa,ana.costa@email.com,(85) 96543-2109,1995-02-08,F,Fortaleza,CE,60123-456,2022-01-18,Prata,23,5678.90,Beleza,2024-02-12
+CLI004,Pedro Henrique Lima,pedro.lima@email.com,(31) 95432-1098,1990-07-30,M,Belo Horizonte,MG,30234-567,2021-11-05,Ouro,34,8934.55,Casa e Jardim,2024-02-11
+CLI005,Carla Rodrigues Alves,carla.alves@email.com,(41) 94321-0987,1985-12-12,F,Curitiba,PR,80345-678,2020-04-14,Platinum,76,19876.40,Roupas e Acessórios,2024-02-10
+CLI006,Roberto Santos Pereira,roberto.pereira@email.com,(51) 93210-9876,1978-09-03,M,Porto Alegre,RS,90456-789,2019-08-20,Diamante,156,45623.80,Eletrônicos,2024-02-09
+CLI007,Fernanda Martins Souza,fernanda.souza@email.com,(62) 92109-8765,1992-04-18,F,Goiânia,GO,74567-890,2022-03-12,Bronze,12,2345.60,Livros,2024-02-08
+CLI008,Carlos Eduardo Ferreira,carlos.ferreira@email.com,(27) 91098-7654,1988-01-25,M,Vitória,ES,29678-901,2021-07-28,Prata,28,6789.30,Esportes,2024-02-07
+CLI009,Juliana Almeida Barbosa,juliana.barbosa@email.com,(84) 90987-6543,1993-10-14,F,Natal,RN,59789-012,2022-05-16,Ouro,41,9876.50,Beleza,2024-02-06
+CLI010,Ricardo Gomes Silva,ricardo.silva@email.com,(65) 89876-5432,1980-06-07,M,Cuiabá,MT,78890-123,2020-12-03,Platinum,67,18765.90,Casa e Jardim,2024-02-05
+CLI011,Beatriz Santos Lima,beatriz.lima@email.com,(86) 88765-4321,1996-08-29,F,Teresina,PI,64901-234,2022-09-08,Bronze,8,1567.80,Brinquedos,2024-02-04
+CLI012,Marcos Antonio Costa,marcos.costa@email.com,(68) 87654-3210,1975-03-16,M,Rio Branco,AC,69012-345,2019-05-25,Diamante,189,52341.70,Eletrônicos,2024-02-03
+CLI013,Larissa Oliveira Santos,larissa.santos@email.com,(82) 86543-2109,1991-12-05,F,Maceió,AL,57123-456,2021-10-17,Prata,25,5432.10,Roupas e Acessórios,2024-02-02
+CLI014,Diego Ferreira Alves,diego.alves@email.com,(79) 85432-1098,1987-09-22,M,Aracaju,SE,49234-567,2020-07-11,Ouro,38,8765.40,Esportes,2024-02-01
+CLI015,Camila Rosa Pereira,camila.pereira@email.com,(83) 84321-0987,1994-05-11,F,João Pessoa,PB,58345-678,2022-01-29,Bronze,15,3456.70,Saúde,2024-01-31
