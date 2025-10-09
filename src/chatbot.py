@@ -5,12 +5,121 @@ Usa LangChain SQL Agent com OpenAI para responder perguntas sobre dados de vende
 
 import os
 from pathlib import Path
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+import sqlite3
 from langchain_community.utilities import SQLDatabase
 from langchain_community.agent_toolkits import SQLDatabaseToolkit
 from langchain_openai import ChatOpenAI
-from langchain.agents import create_sql_agent
+from langchain_community.agent_toolkits.sql.base import create_sql_agent
 from langchain.agents.agent_types import AgentType
-import db
+from langchain.tools import BaseTool
+from typing import Type
+from pydantic import BaseModel, Field
+try:
+    from . import db
+except ImportError:
+    import db
+
+
+class PlotGeneratorInput(BaseModel):
+    """Input for plot generator tool."""
+    python_code: str = Field(description="Python code to generate a plotly chart")
+
+
+class PlotGeneratorTool(BaseTool):
+    """Tool that executes Python code to generate plotly charts."""
+    name: str = "plot_generator"
+    description: str = """
+    Use this tool to generate interactive charts and visualizations.
+    
+    The input should be Python code that:
+    1. Queries the database using pandas.read_sql_query(sql, conn)
+    2. Creates a plotly chart (px.bar, px.line, px.pie, etc.)
+    3. Assigns the chart to variable 'fig'
+    4. Closes the database connection
+    
+    Available libraries: pandas as pd, plotly.express as px, plotly.graph_objects as go, sqlite3
+    Database file: 'meli_vision.db'
+    
+    Example:
+    ```python
+    import pandas as pd
+    import plotly.express as px
+    import sqlite3
+    
+    conn = sqlite3.connect('meli_vision.db')
+    df = pd.read_sql_query("SELECT categoria, COUNT(*) as count FROM produtos GROUP BY categoria", conn)
+    conn.close()
+    fig = px.bar(df, x='categoria', y='count', title='Produtos por Categoria')
+    ```
+    
+    Always assign the final chart to 'fig' variable and close database connections.
+    """
+    args_schema: Type[BaseModel] = PlotGeneratorInput
+    last_figure: object = None  # Add as a Pydantic field
+    
+    def _run(self, python_code: str) -> str:
+        """Execute the Python code to generate a chart."""
+        try:
+            print(f"🎨 Executando código Python para gerar gráfico...")
+            print(f"📝 Código: {python_code}")
+            
+            # Create safe execution environment
+            import pandas as pd
+            import plotly.express as px
+            import plotly.graph_objects as go
+            import sqlite3
+            
+            # Define available variables for the code
+            local_vars = {
+                'pd': pd,
+                'px': px, 
+                'go': go,
+                'sqlite3': sqlite3,
+                'fig': None
+            }
+            
+            # Create a safe globals environment
+            safe_globals = {
+                '__builtins__': {
+                    '__import__': __import__,
+                    'len': len,
+                    'range': range,
+                    'enumerate': enumerate,
+                    'str': str,
+                    'int': int,
+                    'float': float,
+                    'list': list,
+                    'dict': dict,
+                    'tuple': tuple,
+                    'set': set,
+                    'print': print,
+                }
+            }
+            
+            # Execute the code
+            exec(python_code, safe_globals, local_vars)
+            
+            # Get the figure object
+            fig = local_vars.get('fig')
+            if fig:
+                # Store figure for later retrieval
+                self.last_figure = fig
+                print("✅ Gráfico gerado com sucesso!")
+                return "Chart generated successfully! The interactive chart will be displayed below the response."
+            else:
+                print("❌ Nenhuma figura foi criada")
+                return "Error: No figure object was created. Make sure your code assigns the chart to 'fig' variable."
+                
+        except Exception as e:
+            error_msg = f"Error generating chart: {str(e)}"
+            print(f"❌ {error_msg}")
+            return error_msg
+    
+    def _arun(self, python_code: str):
+        raise NotImplementedError("This tool does not support async execution.")
 
 
 class MeliChatbot:
@@ -28,6 +137,13 @@ class MeliChatbot:
         self.db = None
         self.llm = None
         self.agent = None
+        self.plot_tool = None
+        
+        # Palavras-chave para detectar solicitações de gráfico
+        self.chart_keywords = [
+            'gráfico', 'grafico', 'chart', 'plot', 'visualiz', 'mostrar',
+            'plotar', 'desenhar', 'criar gráfico', 'fazer gráfico', 'mostrar graficamente'
+        ]
         
     def ensure_database(self):
         """Garante que o banco de dados existe, criando se necessário"""
@@ -70,21 +186,25 @@ class MeliChatbot:
             return False
     
     def setup_agent(self):
-        """Configura o SQL Agent do LangChain"""
+        """Configura o SQL Agent do LangChain com ferramenta de plotagem"""
         try:
             # Criar toolkit SQL
             toolkit = SQLDatabaseToolkit(db=self.db, llm=self.llm)
             
-            # Criar agent SQL
+            # Criar ferramenta de plotagem
+            self.plot_tool = PlotGeneratorTool()
+            
+            # Criar agent SQL com ferramenta de plotagem
             self.agent = create_sql_agent(
                 llm=self.llm,
                 toolkit=toolkit,
+                extra_tools=[self.plot_tool],
                 agent_type=AgentType.OPENAI_FUNCTIONS,
                 verbose=True,
                 max_iterations=5
             )
             
-            print("✅ SQL Agent configurado!")
+            print("✅ SQL Agent configurado com ferramenta de plotagem!")
             return True
             
         except Exception as e:
@@ -141,6 +261,77 @@ class MeliChatbot:
             error_msg = f"❌ Erro ao processar pergunta: {e}"
             print(error_msg)
             return error_msg
+    
+    def _detect_chart_request(self, question):
+        """Detecta se a pergunta solicita um gráfico"""
+        question_lower = question.lower()
+        return any(keyword in question_lower for keyword in self.chart_keywords)
+    
+    
+    def ask_with_chart(self, question):
+        """
+        Versão aprimorada que pode gerar gráficos via agent code generation
+        
+        Args:
+            question: Pergunta em português sobre os dados
+            
+        Returns:
+            Dict com 'response' (texto) e opcionalmente 'chart' (plotly figure)
+        """
+        if not self.agent:
+            return {"response": "❌ Chatbot não inicializado. Execute initialize() primeiro."}
+        
+        result = {"response": "", "chart": None}
+        
+        try:
+            print(f"\n🤔 Pergunta: {question}")
+            
+            # Verificar se é solicitação de gráfico
+            needs_chart = self._detect_chart_request(question)
+            
+            if needs_chart:
+                # Modificar pergunta para solicitar geração de código Python
+                enhanced_question = f"""
+                {question}
+                
+                Por favor, use a ferramenta plot_generator para criar um gráfico interativo. 
+                Escreva código Python que:
+                1. Conecte ao banco 'meli_vision.db'
+                2. Execute a consulta SQL apropriada
+                3. Crie um gráfico plotly adequado (bar, line, pie, etc.)
+                4. Atribua o gráfico à variável 'fig'
+                5. Feche a conexão do banco
+                
+                Escolha o tipo de gráfico mais apropriado para os dados.
+                """
+            else:
+                enhanced_question = question
+            
+            # Obter resposta do agente
+            try:
+                response = self.agent.run(enhanced_question)
+            except Exception as agent_error:
+                print(f"⚠️ Erro com agente: {agent_error}")
+                response = self.agent.invoke({"input": enhanced_question})
+                if isinstance(response, dict) and "output" in response:
+                    response = response["output"]
+            
+            result["response"] = response
+            
+            # Verificar se gráfico foi gerado pelo plot_tool
+            if needs_chart and self.plot_tool and hasattr(self.plot_tool, 'last_figure') and self.plot_tool.last_figure:
+                result["chart"] = self.plot_tool.last_figure
+                # Limpar a figura para próximo uso
+                self.plot_tool.last_figure = None
+                print("✅ Gráfico capturado do plot_tool!")
+            
+            print(f"🤖 Resposta: {result['response'][:200]}...")
+            return result
+            
+        except Exception as e:
+            error_msg = f"❌ Erro ao processar pergunta: {e}"
+            print(error_msg)
+            return {"response": error_msg, "chart": None}
     
     def show_schema(self):
         """Mostra o esquema das tabelas para referência"""

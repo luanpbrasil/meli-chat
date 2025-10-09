@@ -87,13 +87,19 @@ def initialize_chatbot(api_key, model):
             st.session_state.chatbot_initialized = False
 
 def process_user_question(question):
-    """Processa uma pergunta do usuário e gera resposta"""
+    """Processa uma pergunta do usuário e gera resposta com possível gráfico"""
     if st.session_state.chatbot_initialized and st.session_state.chatbot:
         try:
-            # Gerar resposta usando o chatbot
+            # Gerar resposta usando o chatbot (com gráficos)
             with st.spinner("🤔 Processando pergunta..."):
-                response = st.session_state.chatbot.ask(question)
-                st.session_state.messages.append({"role": "assistant", "content": response})
+                result = st.session_state.chatbot.ask_with_chart(question)
+                
+                # Adicionar resposta de texto
+                st.session_state.messages.append({
+                    "role": "assistant", 
+                    "content": result["response"],
+                    "chart": result.get("chart")  # Incluir gráfico se disponível
+                })
         except Exception as e:
             error_msg = f"❌ Erro ao processar pergunta: {str(e)}"
             st.session_state.messages.append({"role": "assistant", "content": error_msg})
@@ -170,7 +176,10 @@ def setup_sidebar():
             "Quantas vendas foram feitas?",
             "Qual cliente comprou mais?",
             "Campanhas ativas?",
-            "Média de preço dos produtos?"
+            "Média de preço dos produtos?",
+            "📊 Gráfico dos produtos mais vendidos",
+            "📈 Mostrar evolução das vendas",
+            "🥧 Gráfico de pizza das categorias"
         ]
         
         for i, question in enumerate(example_questions):
@@ -183,7 +192,7 @@ def setup_sidebar():
                 st.rerun()
 
 def display_chat_messages():
-    """Exibe as mensagens do chat"""
+    """Exibe as mensagens do chat com suporte a gráficos"""
     for message in st.session_state.messages:
         if message["role"] == "user":
             st.markdown(f"""
@@ -197,6 +206,10 @@ def display_chat_messages():
                 <b>🤖 Assistente:</b> {message["content"]}
             </div>
             """, unsafe_allow_html=True)
+            
+            # Mostrar gráfico se disponível
+            if message.get("chart"):
+                st.plotly_chart(message["chart"], use_container_width=True)
 
 def display_table_data(table_name, num_rows=10):
     """Exibe os dados de uma tabela selecionada"""
@@ -241,7 +254,7 @@ def main():
     st.markdown("""
     <div class="main-header">
         <h1>🤖 Meli Vision - Chatbot Analítico</h1>
-        <p>Seu assistente inteligente para análise de dados do Mercado Livre</p>
+        <p>Seu assistente inteligente para análise de dados do Mercado Livre com geração de gráficos</p>
     </div>
     """, unsafe_allow_html=True)
     
